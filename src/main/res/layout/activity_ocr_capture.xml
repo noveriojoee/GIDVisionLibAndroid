@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewActivity.TextRecognition.OcrCaptureActivity">
+
+    <gid.com.gidvisionlib.Utilities.Camera.CameraSourcePreview
+        android:id="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <gid.com.gidvisionlib.Utilities.Camera.GraphicOverlay
+            android:id="@+id/graphicOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </gid.com.gidvisionlib.Utilities.Camera.GraphicOverlay>
+
+    </gid.com.gidvisionlib.Utilities.Camera.CameraSourcePreview>
+    <TextView
+        android:id="@+id/tvOcrResult"
+        android:text="OcrResult here..."
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GIDVisionLib</string>
+    <string name="title_activity_gidlib_vision_main">GIDLibVisionMainActivity</string>
+</resources>
