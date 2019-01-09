@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewActivity.TextRecognition.OcrCaptureActivity">
+    tools:context=".ViewActivity.GIDLibVisionMainActivity">
 
     <gid.com.gidvisionlib.Utilities.Camera.CameraSourcePreview
         android:id="@+id/preview"

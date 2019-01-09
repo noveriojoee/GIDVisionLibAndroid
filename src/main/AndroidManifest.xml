@@ -11,7 +11,6 @@
             android:name=".ViewActivity.GIDLibVisionMainActivity"
             android:label="@string/title_activity_gidlib_vision_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ViewActivity.TextRecognition.OcrCaptureActivity"></activity>
     </application>
 
 </manifest>
