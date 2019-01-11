@@ -22,8 +22,6 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
         this.activityListener = activityListener;
     }
 
-
-
     @Override
     public void release() {
         graphicOverlay.clear();
@@ -32,14 +30,7 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
     @Override
     public void receiveDetections(Detector.Detections<TextBlock> detections) {
         graphicOverlay.clear();
-//        SparseArray<TextBlock> items = detections.getDetectedItems();
-//        for (int i = 0; i < items.size(); ++i) {
-//            this.activityListener.onReceiveText(items.valueAt(i));
-//
-//        }
         this.activityListener.onReceiveText(detections.getDetectedItems());
 
     }
-
-
 }

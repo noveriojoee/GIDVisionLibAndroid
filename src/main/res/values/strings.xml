@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">GIDVisionLib</string>
     <string name="title_activity_gidlib_vision_main">GIDLibVisionMainActivity</string>
+
+
+    <string name="btnTakeNPWP">OCR NPWP Number</string>
+    <string name="btnTakeDebitCard">OCR Get Debit Card Number</string>
+    <string name="btnTakeKTP">OCR Get KTP Number</string>
+
 </resources>

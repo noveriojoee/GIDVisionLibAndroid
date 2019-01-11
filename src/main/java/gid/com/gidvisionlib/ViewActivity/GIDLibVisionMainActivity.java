@@ -2,6 +2,7 @@ package gid.com.gidvisionlib.ViewActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -33,6 +34,7 @@ import gid.com.gidvisionlib.Utilities.Camera.CameraSourcePreview;
 import gid.com.gidvisionlib.Utilities.Camera.GraphicOverlay;
 import gid.com.gidvisionlib.Utilities.Graphic.OcrGraphic;
 import gid.com.gidvisionlib.Utilities.OcrDetectorProcessor;
+import gid.com.gidvisionlib.ViewModels.OcrDetectorViewModel;
 
 public class GIDLibVisionMainActivity extends BaseActivity implements IOCRListener {
 
@@ -44,6 +46,9 @@ public class GIDLibVisionMainActivity extends BaseActivity implements IOCRListen
     // Permission request codes need to be < 256
     private static final int RC_HANDLE_CAMERA_PERM = 2;
 
+    //Flag is on process recognizing text or not
+    private static boolean isReadingImage = false;
+
     // Constants used to pass extra data in the intent
     public static final String AutoFocus = "AutoFocus";
     public static final String UseFlash = "UseFlash";
@@ -53,6 +58,7 @@ public class GIDLibVisionMainActivity extends BaseActivity implements IOCRListen
     private CameraSourcePreview preview;
     private GraphicOverlay<OcrGraphic> graphicOverlay;
     private TextView tvOcrResult;
+    private OcrDetectorViewModel viewModel;
 
     @Override
     protected void bindView() {
@@ -81,6 +87,14 @@ public class GIDLibVisionMainActivity extends BaseActivity implements IOCRListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.onCreateSetContentView(R.layout.activity_gid_lib_vision_main_activity);
+        this.getExtrasData();
+    }
+
+    private void getExtrasData(){
+        Bundle bundle = getIntent().getExtras();
+        this.viewModel = new OcrDetectorViewModel();
+        this.viewModel.setOcrMode(bundle.getString("OCR_MODE"));
+        GIDLibVisionMainActivity.isReadingImage = false;
     }
 
     private void requestCameraPermission() {
@@ -95,8 +109,6 @@ public class GIDLibVisionMainActivity extends BaseActivity implements IOCRListen
         }
 
     }
-
-
 
     @SuppressLint("InlinedApi")
     private void createCameraSource(boolean autoFocus, boolean useFlash) {
@@ -230,22 +242,37 @@ public class GIDLibVisionMainActivity extends BaseActivity implements IOCRListen
 
     @Override
     public void onReceiveText(SparseArray<TextBlock> blocks) {
-
-        String textPerRow = "";
-        for (int i = 0; i < blocks.size(); ++i) {
-            TextBlock block = blocks.get(i);
-            if (block != null && block.getValue() != null) {
-                textPerRow += block.getValue() + "\n";
+        if (isReadingImage==false){
+            isReadingImage = true;
+            String textPerRow = "";
+            for (int i = 0; i < blocks.size(); ++i) {
+                TextBlock block = blocks.get(i);
+                if (block != null && block.getValue() != null) {
+                    textPerRow += block.getValue() + "\n";
+                }
+            }
+            final String textResult = textPerRow;
+            this.viewModel.setTextCaptured(textResult);
+            String result = this.viewModel.extractData();
+            if (!result.equals("NOT_FOUND")){
+                //dismiss activity
+                //release camera memory
+                Intent intent = new Intent();
+                intent.putExtra("OCR_RESULT_TEXT", this.viewModel.getTextCaptured());
+                setResult(Activity.RESULT_OK,intent); //add this
+                finish();
+            }else{
+                //Debug mode
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvOcrResult.setText(textResult);
+                    }
+                });
+                isReadingImage = false;
             }
         }
-        final String textResult = textPerRow;
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                tvOcrResult.setText(textResult);
-            }
-        });
     }
 
 
