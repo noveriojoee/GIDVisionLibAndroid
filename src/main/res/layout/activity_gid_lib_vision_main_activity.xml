@@ -9,11 +9,6 @@
         android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <gid.com.gidvisionlib.Utilities.Camera.GraphicOverlay
-            android:id="@+id/graphicOverlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-        </gid.com.gidvisionlib.Utilities.Camera.GraphicOverlay>
 
     </gid.com.gidvisionlib.Utilities.Camera.CameraSourcePreview>
     <TextView

@@ -17,19 +17,17 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
     private IOCRListener activityListener;
 
 
-    public OcrDetectorProcessor(GraphicOverlay<OcrGraphic> ocrGraphicOverlay, IOCRListener activityListener) {
-        graphicOverlay = ocrGraphicOverlay;
+    public OcrDetectorProcessor(IOCRListener activityListener) {
         this.activityListener = activityListener;
     }
 
     @Override
     public void release() {
-        graphicOverlay.clear();
+
     }
 
     @Override
     public void receiveDetections(Detector.Detections<TextBlock> detections) {
-        graphicOverlay.clear();
         this.activityListener.onReceiveText(detections.getDetectedItems());
 
     }

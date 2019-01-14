@@ -670,7 +670,7 @@ public class CameraSource {
     /**
      * Only allow creation via the builder class.
      */
-    private CameraSource() {
+    public CameraSource() {
     }
 
     /**
