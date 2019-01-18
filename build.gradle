@@ -9,6 +9,7 @@ buildscript {
 
 
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion 28
